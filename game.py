@@ -7,3 +7,4 @@ class Game:
     def __init__(self):
         # Generer le jouer
         self.player = Player()
+        self.pressed = {}
