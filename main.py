@@ -1,5 +1,7 @@
 import pygame
+import math
 from game import Game
+
 pygame.init()
 
 # Generer la fenetre du jeu
@@ -12,6 +14,19 @@ background = pygame.image.load('assets/bg.jpg')
 # Charger le jeu
 game = Game()
 
+# importer notre banniere
+banner = pygame.image.load('assets/banner.png')
+banner = pygame.transform.scale(banner, (500, 500))
+banner_rect = banner.get_rect()
+banner_rect.x = math.ceil(screen.get_width() / 4)
+
+# importer le bouton start
+play_button = pygame.image.load('assets/button.png')
+play_button = pygame.transform.scale(play_button, (400, 150))
+play_button_rect = play_button.get_rect()
+play_button_rect.x = math.ceil((screen.get_width() / 3.33))
+play_button_rect.y = math.ceil((screen.get_height() / 2))
+
 running = True
 
 # Boucle tant que cette condition est vrai
@@ -20,32 +35,13 @@ while running:
     # appliquer l'arriere plan
     screen.blit(background, (0, -200))
 
-    # Add player image
-    screen.blit(game.player.image, game.player.rect)
-
-    # actualiser la barre de vie du joueur
-    game.player.update_health_bar(screen)
-
-    # recuperer les pojectiles du joueur
-    for projectile in game.player.all_projectiles:
-        projectile.move()
-
-    # recuperer les monstres
-    for monster in game.all_monsters:
-        monster.forward()
-        monster.update_health_bar(screen)
-
-    # appliquer l'ensemble des images du groupe projectile
-    game.player.all_projectiles.draw(screen)
-
-    # appliquer l'ensemble des images du groupe monstre
-    game.all_monsters.draw(screen)
-
-    # Verifier si le joueur souhaite aller à gauche ou droite
-    if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x + game.player.rect.width < screen.get_width():
-        game.player.move_right()
-    elif game.pressed.get(pygame.K_LEFT) and game.player.rect.x > 0:
-        game.player.move_left()
+    # verifier si le jeu a commence
+    if game.is_playing:
+        game.update(screen)
+    else:
+        # ecran d'acceuil
+        screen.blit(play_button, play_button_rect)
+        screen.blit(banner, banner_rect)
 
 
     # mise à jour de l'ecran
@@ -67,3 +63,7 @@ while running:
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if play_button_rect.collidepoint(event.pos):
+                game.is_playing = True
