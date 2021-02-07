@@ -17,8 +17,16 @@ class Game:
         # groupe de monstre
         self.all_monsters = pygame.sprite.Group()
         self.pressed = {}
+
+    def start(self):
+        self.is_playing = True
         self.spawn_monster()
         self.spawn_monster()
+
+    def game_over(self):
+        self.all_monsters = pygame.sprite.Group()
+        self.player.health = self.player.max_health
+        self.is_playing = False
 
     def update(self, screen):
         # Add player image
@@ -54,4 +62,3 @@ class Game:
     def spawn_monster(self):
         monster = Monster(self)
         self.all_monsters.add(monster)
-
