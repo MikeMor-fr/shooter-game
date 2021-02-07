@@ -11,6 +11,9 @@ class Game:
         self.player = Player(self)
         self.all_players.add(self.player)
 
+        # Definir si le jeu a commence
+        self.is_playing = False
+
         # groupe de monstre
         self.all_monsters = pygame.sprite.Group()
 
