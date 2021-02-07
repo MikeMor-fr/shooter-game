@@ -30,6 +30,7 @@ while running:
     # recuperer les monstres
     for monster in game.all_monsters:
         monster.forward()
+        monster.update_health_bar(screen)
 
     # appliquer l'ensemble des images du groupe projectile
     game.player.all_projectiles.draw(screen)
