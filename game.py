@@ -1,6 +1,7 @@
 import pygame
 from player import Player
 from monster import Monster
+from comet_event import CometFallEvent
 
 
 # Créer une seconde classe représentant notre jeu
@@ -18,6 +19,9 @@ class Game:
         self.all_monsters = pygame.sprite.Group()
         self.pressed = {}
 
+        # generer l'evenement comet
+        self.comet_event = CometFallEvent(self)
+
     def start(self):
         self.is_playing = True
         self.spawn_monster()
@@ -25,7 +29,9 @@ class Game:
 
     def game_over(self):
         self.all_monsters = pygame.sprite.Group()
+        self.comet_event.all_comets = pygame.sprite.Group()
         self.player.health = self.player.max_health
+        self.comet_event.reset_percent()
         self.is_playing = False
 
     def update(self, screen):
@@ -34,6 +40,9 @@ class Game:
 
         # actualiser la barre de vie du joueur
         self.player.update_health_bar(screen)
+
+        # actualiser la barre d'evenement du jeu
+        self.comet_event.update_bar(screen)
 
         # recuperer les pojectiles du joueur
         for projectile in self.player.all_projectiles:
@@ -44,11 +53,18 @@ class Game:
             monster.forward()
             monster.update_health_bar(screen)
 
+        # recuperer les commettes du jeu
+        for comet in self.comet_event.all_comets:
+            comet.fall()
+
         # appliquer l'ensemble des images du groupe projectile
         self.player.all_projectiles.draw(screen)
 
         # appliquer l'ensemble des images du groupe monstre
         self.all_monsters.draw(screen)
+
+        # appliquer l'ensemble des images du groupe comet
+        self.comet_event.all_comets.draw(screen)
 
         # Verifier si le joueur souhaite aller à gauche ou droite
         if self.pressed.get(pygame.K_RIGHT) and self.player.rect.x + self.player.rect.width < screen.get_width():
