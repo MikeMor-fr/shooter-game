@@ -21,6 +21,10 @@ class Player(pygame.sprite.Sprite):
 
         self.game = game
 
+    def damage(self, amount):
+        if self.health - amount > amount:
+            self.health -= amount
+
     def launch_projectile(self):
         self.all_projectiles.add(Projectile(self))
 
@@ -31,3 +35,20 @@ class Player(pygame.sprite.Sprite):
 
     def move_left(self):
         self.rect.x -= self.velocity
+
+    def update_health_bar(self, surface):
+        # definir une couleur pour jauge de vie (vert clair)
+        bar_color = (111, 210, 46)
+
+        # definir une couleur pour l'arriere plan de la jauge de vie
+        back_bar_color = (60, 63, 60)
+
+        # definir la position de la jauge, largeur et épaisseur
+        bar_position = [self.rect.x + 50, self.rect.y + 20, self.health, 7]
+
+        # definir la position de l'arriere plan de jauge de vie
+        back_bar_position = [bar_position[0], bar_position[1], self.max_health, bar_position[-1]]
+
+        # dessin de bar de vie
+        pygame.draw.rect(surface, back_bar_color, back_bar_position)
+        pygame.draw.rect(surface, bar_color, bar_position)
