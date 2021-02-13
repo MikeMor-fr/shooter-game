@@ -21,6 +21,10 @@ class Game:
 
         # generer l'evenement comet
         self.comet_event = CometFallEvent(self)
+        
+        # mettre le score a zero
+        self.font = pygame.font.SysFont('monospace', 25, True)
+        self.score = 0
 
     def start(self):
         self.is_playing = True
@@ -34,8 +38,16 @@ class Game:
         self.player.health = self.player.max_health
         self.comet_event.reset_percent()
         self.is_playing = False
+        self.score = 0
+
+    def add_score(self, score=1):
+        self.score += score
 
     def update(self, screen):
+        # afficher le score:
+        score_text = self.font.render(f'Score: {self.score}', 1, (0, 0, 0))
+        screen.blit(score_text, (20, 20))
+        
         # Add player image
         screen.blit(self.player.image, self.player.rect)
 
