@@ -4,6 +4,10 @@ from game import Game
 
 pygame.init()
 
+# definir une clock
+clock = pygame.time.Clock()
+FPS = 100
+
 # Generer la fenetre du jeu
 pygame.display.set_caption('Commet Fall Game')
 screen = pygame.display.set_mode((1080, 720))
@@ -67,3 +71,5 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if play_button_rect.collidepoint(event.pos):
                 game.start()
+    # fixer le nombre de FPS sur clock
+    clock.tick(FPS)

@@ -9,8 +9,8 @@ class Player(animation.AnimateSprite):
         super().__init__('player')
         self.health = 100
         self.max_health = 100
-        self.attack = 10
-        self.velocity = 2
+        self.attack = 30
+        self.velocity = 5
         self.rect = self.image.get_rect()
         self.rect.x = 400
         self.rect.y = 500
