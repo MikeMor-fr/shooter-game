@@ -43,4 +43,3 @@ class Projectile(pygame.sprite.Sprite):
         # verifier si projectile n'est plus present sur m'ecran
         if self.rect.x > 1080:
             self.remove()
-            print("projectile supprimé")
