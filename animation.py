@@ -4,9 +4,11 @@ import pygame
 # definir class pour animation
 class AnimateSprite(pygame.sprite.Sprite):
 
-    def __init__(self, sprite_name):
+    def __init__(self, sprite_name, size=(200, 200)):
         super().__init__()
+        self.size = size
         self.image = pygame.image.load(f'assets/{sprite_name}.png')
+        self.image = pygame.transform.scale(self.image, size)
         self.current_image = 0
         self.images = animations.get(f'{sprite_name}')
         self.animation = False
@@ -26,6 +28,7 @@ class AnimateSprite(pygame.sprite.Sprite):
                     self.animation = False
 
             self.image = self.images[self.current_image]
+            self.image = pygame.transform.scale(self.image, self.size)
 
 
 # definir une fonction pour charger les images du sprite
@@ -43,5 +46,6 @@ def load_animation_images(sprite_name):
 # definir in dict contenant les images chargees de chaque sprite
 animations = {
     'mummy': load_animation_images('mummy'),
-    'player': load_animation_images('player')
+    'player': load_animation_images('player'),
+    'alien': load_animation_images('alien')
 }

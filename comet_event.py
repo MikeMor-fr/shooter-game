@@ -24,7 +24,7 @@ class CometFallEvent:
         self.percent = 0
 
     def meteor_fall(self):
-        for i in range(1, 10):
+        for i in range(1, 15):
             # apparaitre une premiere boule de feu
             self.all_comets.add(Comet(self))
 
