@@ -28,6 +28,9 @@ class Player(animation.AnimateSprite):
         # demarrer l'animation du lancer
         self.start_animation()
 
+        # jouer le son
+        self.game.sound_manager.play('tir')
+
     def move_right(self):
         # si le jouer n'est pas en collision
         if not self.game.check_collision(self, self.game.all_monsters):
